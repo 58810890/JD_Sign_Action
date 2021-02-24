@@ -11,7 +11,7 @@ const download = require('download')
 const cookie = process.env.JD_COOKIE
 // 京东Cookie
 const dual_cookie = process.env.JD_DUAL_COOKIE
-// Server酱SCKEY
+// Server酱SCKEY 弃用server酱 换https://woriqq.com/archives/45.html推送  
 const push_key = process.env.PUSH_KEY
 
 // 京东脚本文件
@@ -77,9 +77,22 @@ function sendNotificationIfNeed() {
   // 去除末尾的换行
   let SCKEY = push_key.replace(/[\r\n]/g,"")
 
+  //弃用serverjiang推送  注释掉下面方法
+  //   const options ={
+  //     uri:  `https://sctapi.ftqq.com/${SCKEY}.send`,
+  //     form: { text, desp },
+  //     json: true,
+  //     method: 'POST'
+  //   }
+  
+  //换http://dk.ttupp.com/weixin/weixin.php推送消息 请求方式：POST 返回格式：JSON 
+  //key 企业ID+Secret+AgentId（几个值需要用.隔开   如：企业id.Secret.AgentId
+  //msg 要推送的消息文字
+  let key = SCKEY
+  let msg = desp
   const options ={
-    uri:  `https://sctapi.ftqq.com/${SCKEY}.send`,
-    form: { text, desp },
+    uri:  `http://dk.ttupp.com/weixin/weixin.php`,
+    form: { key, msg },
     json: true,
     method: 'POST'
   }
